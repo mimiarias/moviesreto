@@ -7,3 +7,23 @@
 !./ngrok authtoken "2smaCPYpEkfIVyUphU4oAQbbZCL_32q27equusysY5EpEGvwV"
 Authtoken saved to configuration file: /root/.config/ngrok/ngrok.yml
 !pip install firebase-admin
+!git clone https://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@github.com/mimiarias/moviesreto.git
+cd moviesreto
+!ls -la
+!git remote -v
+from os import path
+import firebase_admin
+from firebase_admin import credentials, firestore
+import pandas as pd
+
+path = "/content/"
+
+cred = credentials.Certificate(path + "movies-reto-tlg.json")
+firebase_admin.initialize_app(cred)
+db = firestore.client ()
+doc_ref = db.collection(u'movies') #Set the name of the Collection
+#Import data
+df = pd.read_csv(path + 'movies.csv')
+tmp = df.to_dict(orient='records')
+list(map(lambda x: doc_ref.add(x), tmp))  
+!mkdir .streamlit
