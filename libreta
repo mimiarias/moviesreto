@@ -1,0 +1,9 @@
+!git --version
+!pip install Streamlit
+!streamlit --version
+!wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-stable-linux-amd64.zip
+!unzip -o ngrok-stable-linux-amd64.zip
+!./ngrok --version
+!./ngrok authtoken "2smaCPYpEkfIVyUphU4oAQbbZCL_32q27equusysY5EpEGvwV"
+Authtoken saved to configuration file: /root/.config/ngrok/ngrok.yml
+!pip install firebase-admin
