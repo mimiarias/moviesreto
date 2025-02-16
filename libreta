@@ -1,29 +1,40 @@
 !git --version
 !pip install Streamlit
 !streamlit --version
-!wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-stable-linux-amd64.zip
-!unzip -o ngrok-stable-linux-amd64.zip
-!./ngrok --version
-!./ngrok authtoken "2smaCPYpEkfIVyUphU4oAQbbZCL_32q27equusysY5EpEGvwV"
-Authtoken saved to configuration file: /root/.config/ngrok/ngrok.yml
 !pip install firebase-admin
 !git clone https://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@github.com/mimiarias/moviesreto.git
 cd moviesreto
 !ls -la
 !git remote -v
-from os import path
 import firebase_admin
 from firebase_admin import credentials, firestore
 import pandas as pd
 
-path = "/content/"
+path = "/content/moviesreto/"
 
-cred = credentials.Certificate(path + "movies-reto-tlg.json")
+cred = credentials.Certificate(path + "movies-reto-tlg-firebase.json")
 firebase_admin.initialize_app(cred)
+
 db = firestore.client ()
 doc_ref = db.collection(u'movies') #Set the name of the Collection
 #Import data
 df = pd.read_csv(path + 'movies.csv')
 tmp = df.to_dict(orient='records')
 list(map(lambda x: doc_ref.add(x), tmp))  
+!pip install toml
 !mkdir .streamlit
+import toml
+
+output_file = ".streamlit/secrets.toml"
+
+with open("movies-reto-tlg-firebase.json") as json_file:
+  json_text = json_file.read()
+
+config = {"textkey" : json_text}
+toml_config = toml.dumps(config)
+
+with open(output_file, "w") as target:
+  target.write(toml_config)
+!ls -la
+!ls -la .streamlit/
+!cat .streamlit/secrets.toml
