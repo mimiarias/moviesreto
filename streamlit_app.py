@@ -7,7 +7,7 @@ import json
 # Cargar credenciales desde secrets.toml
 key_dict = json.loads(st.secrets["textkey"])
 creds = service_account.Credentials.from_service_account_info(key_dict)
-db = firestore.Client(credentials=creds, project="moviesreto")
+db = firestore.Client(credentials=creds, project="movies-reto-tlg")
 
 # Referencia a la colección "movies"
 dbMovies = db.collection("movies")
